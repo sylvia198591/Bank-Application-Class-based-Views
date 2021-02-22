@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+{%extends 'Kiosk/base.html'%}
+{%block body_block%}
+<h1>Update</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token%}
+    {{form.as_p}}
+    <input type="submit" value="update">
+
+</form>
+{%endblock%}

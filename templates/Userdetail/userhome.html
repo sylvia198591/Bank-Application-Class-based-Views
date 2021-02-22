@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+{%extends 'Userdetail/base.html'%}
+
+{%block body_block%}
+
+<!-- home.html -->
+
+    <h2>Home</h2>
+
+    {% if user.is_authenticated %}
+    <p>Welcome to the  Bank dear {{user.first_name}} {{user.last_name}}</p>
+<p>Please click on the operation u want to perform.</p>
+<table><tr><td>1</td><td></td><td>Generate Profile</td><td>
+                        <a href="{% url 'crprofile' request.user.id%}">Generate/Update Profile</a></td><td></td></tr>
+<tr><td>2</td><td></td><td>Update User</td><td>
+                        <a href="{% url 'upd' request.user.id%}">Update User</a></td><td></td></tr>
+    <tr><td>3</td><td></td><td>Delete Profile</td><td>
+                        <a href="{% url 'upd' request.user.id%}">Delete Profile</a></td><td></td></tr>
+    <tr><td>4</td><td></td><td>Logout</td><td><a href="{% url 'userlogout' %}">Logout</a></td><td></td></tr>
+
+    <tr>{% for m in messages %}
+{%if m.message is ""%}
+        <td>{{ m.message }</td>}{%endif %}{%endfor%}
+    </tr></table>
+     {% else %}
+<p>Welcome User.Please Login if u have a registered username and password. Or signup to Login</p>
+
+<table class="table table-striped table-dark">
+
+        <tr>
+            <td align="center">    <a href="{% url 'login' %}"><button type="button" class="btn btn-primary btn-lg btn-block">Login</button></a></td>
+     <td align="center">    <a href="{% url 'signup' %}"><button type="button" class="btn btn-primary btn-lg btn-block">Create User</button></a></td>
+
+        </tr>
+</table>
+{%endif%}
+<br><br>
+<p>User superuser:: {%if user.is_superuser%}</p>
+<p>true </p>{%else%}<p>false</p>{%endif%}
+    <p>Your name is - {{user.first_name}} {{user.last_name}}</p>
+    <p>Your email is - {{user.email}}</p>
+<p>{{user.id}}</p>
+{% for m in messages %}
+{%if m.message is ""%}
+ <p>{{ m.message }}</p>{%endif %}{%endfor%}
+    <br><br>
+
+
+
+
+
+
+
+{%endblock%}

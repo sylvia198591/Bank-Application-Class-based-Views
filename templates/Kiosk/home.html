@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{%extends 'Kiosk/base.html'%}
+{%block body_block%}
+
+
+<p>Hi {{request.session.Username}}</p><p>Welcome to The Bank</p>
+
+<table class="table table-striped table-dark">
+
+        <tr>
+            <td align="center"><a href="{% url 'Account_view'%}"><button type="button" class="btn btn-primary btn-lg btn-block">Account Summary</button></a></td>
+
+        </tr>
+
+
+    </table>
+
+
+{%endblock%}

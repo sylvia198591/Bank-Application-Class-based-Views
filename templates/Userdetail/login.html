@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+{%extends 'Userdetail/base.html'%}
+
+{%block body_block%}
+<h2>Home</h2>
+    {% if user.is_authenticated %}
+    <p>You are welcome on Home Page</p>
+    <p>Your name is - {{user.first_name}} {{user.last_name}}</p>
+    <p>Your email is - {{user.email}}</p>
+    <br><br>
+<p>{% for m in messages %}
+{%if m.message is ""%}
+ <p>{{ m.message }}</p>{%endif %}{%endfor%}</p>
+
+    <a href="{% url 'userlogout' %}">Logout</a>
+{% else %}
+<!--    <a href="{% url 'login' %}">Login</a>-->
+
+ <form method="post" class="jumbotron">{% csrf_token%}
+
+                <h2>Register Here!</h2>
+                <br>
+                <table>
+                    {% for field in form %}
+                    <tr>
+                        <td>{{field.label_tag}}</td>
+                        <td> {{field.errors}}
+                            {{field}}
+                            <br>
+                        </td>
+                    </tr>
+
+
+                    {% endfor %}
+
+                <tr><td></td><td> <input type="submit" value="Login" class="btn btn-secondary" id="regbutton">
+                        <a href="{% url 'password_reset'%}">Forgot Password?</a></td></tr>
+                                    </table>
+
+            </form>
+
+ {% endif %}
+{%endblock%}

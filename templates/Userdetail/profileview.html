@@ -1,0 +1,36 @@
+
+{% extends 'Userdetail/base.html' %}
+
+{% block title %}Sign Page{% endblock title %}
+
+{%block body_block%}
+
+{% csrf_token %}
+    <h2>Sign Page</h2>
+{%if messages is ''%}
+<p><b>{{messages}}</b></p>  {%endif%}
+<table >
+    <tr>
+        <th>Name:</th> <td>{{request.user.username}}</td></tr>
+  <tr>
+        <th>Address:</th><td> {{object.address}}</td>
+</tr>
+    <tr>
+        <th>DOB:</th><td>{{object.dob}}</td>
+    </tr>
+    <tr>
+        <th>Email:</th><td>{{object.email}}</td>
+</tr>
+
+    <tr>
+        <th>Telephone:</th><td>{{object.telephone}}</td>
+</tr>
+
+     <tr>
+
+</table>
+<hr>
+<a href="{%url 'userhome'%}">Home</a>
+<a href="{%url 'crprofile' object.id%}">Edit Profile</a>
+
+{% endblock%}

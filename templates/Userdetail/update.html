@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{%extends 'Userdetail/base.html'%}
+{%block body_block%}
+<h2>Home</h2>
+
+    <p>Please update the user details</p>
+    <p>Your name is - {{user.first_name}} {{user.last_name}}</p>
+    <p>Your email is - {{user.email}}</p>
+    <br>
+
+{% for m in messages %}
+ <p>{{ m.message }}</p>{%endfor%}
+
+ <form method="post" class="jumbotron">
+     {% csrf_token%}
+
+
+
+                <h2>Update Here!</h2>
+                <br>
+                <table>
+                    {% for field in form %}
+                    <tr>
+                        <td>{{field.label_tag}}</td>
+                        <td> {{field.errors}}
+                            {{field}}
+                            <br>
+                        </td>
+                    </tr>
+
+
+                    {% endfor %}
+                </table>
+                <br>
+
+                <input type="submit" value="Update" class="btn btn-secondary" id="upduser">
+            </form>
+
+
+{%endblock%}

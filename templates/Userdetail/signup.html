@@ -1,0 +1,19 @@
+{% extends 'Userdetail/base.html' %}
+
+{% block title %}Sign Page{% endblock title %}
+
+{%block body_block%}
+
+{% csrf_token %}
+    <h2>Sign Page</h2>
+{%if messages is ''%}
+<p><b>{{messages}}</b></p>  {%endif%}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Register</button>
+        <br><br>
+        <a href="{% url 'userhome' %}">Home</a>
+    </form>
+
+{% endblock%}
