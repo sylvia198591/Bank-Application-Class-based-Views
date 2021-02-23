@@ -92,6 +92,79 @@ class createAccount(LoginRequiredMixin,TemplateView):
             # return render(request, 'test.html', {"form": form, "Accno": rr})
             return render(request, self.template_name, {"form": form, "Accno": rr})
 
+class Account_ns(LoginRequiredMixin,TemplateView):
+    form_class = Accountcreateform
+    model_name = Account
+    template_name = "Kiosk/createAccount.html"
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+
+
+        # Accno = request.session['Accno']
+        context["form"] = self.form_class
+        uid=self.kwargs['pk']
+        pr_acc = Profile.objects.get(user_id=uid)
+        u_acc = User.objects.get(id=uid)
+        print("gg:::",u_acc.username)
+        if ((pr_acc.accno!=0) and (pr_acc.user!='')):
+            print("hdgfh")
+            request.session['accno']=pr_acc.accno
+            request.session['username'] = u_acc.username
+            rr=request.session['accno']
+            rr1=request.session['username']
+            print("ll", rr)
+            print("ll",rr1)
+            form = self.form_class(initial={"Accno": rr, "Name": rr1})  # Change is here <<<<
+            # return render(request, 'test.html', {"form": form, "Accno": rr})
+            return render(request, self.template_name, {"form": form, "Accno": rr, "Name": rr1})
+        else:
+
+            messages = "Please generate/update the profile information before creating/deposting/withdrawing money"
+            form = self.form_class(initial={"messages": messages})  # Change is here <<<<
+            # return render(request, 'test.html', {"form": form, "Accno": rr})
+            return render(request, 'Userdetail/profilecreate.html', {"form": form, "messages": messages})
+
+
+    def post(self, request, *args, **kwargs):
+        print("djfh")
+        # import pdb;pdb.set_trace()
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            Name = request.session['username']
+            Accno = request.session['accno']
+
+            # Amt_c = form.cleaned_data["Amt_c"]
+            # Amt_d = form.cleaned_data["Amt_d"]
+            Amount = form.cleaned_data["Amount"]
+            Dfield = form.cleaned_data["Dfield"]
+            Type = form.cleaned_data["Type"]
+            # qs = Account.objects.filter(Accno=Accno).order_by('Dfield')[0].values_list('Amt')
+            #
+            # context = {}
+            # context["accdtl"] = qs
+            # x_data = [i.get("Amt") for i in qs]
+            # if(x_data==)
+            # isActive=True
+            # if (request.session['Accno'] == Accno):
+            print("tYPE",str(Type))
+            if(str(Type)=="Debit"):
+                Amount=Amount*(-1)
+                print("Amt",Amount)
+            print("Amto", Amount)
+            qs = Account.objects.create(Name=Name, Accno=Accno,Dfield=Dfield,\
+                                         Amount=Amount, Type=Type)
+            print("d1")
+            # form.save(commit=False)
+            print("d2")
+            qs.save()
+            print("d3")
+            return redirect("Account_view")
+        else:
+            rr=request.session['accno']
+            form = self.form_class(initial={"Accno":rr })  # Change is here <<<<
+            # return render(request, 'test.html', {"form": form, "Accno": rr})
+            return render(request, self.template_name, {"form": form, "Accno": rr})
 
 class viewAccount(LoginRequiredMixin,TemplateView):
     model_name = Account
