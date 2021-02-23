@@ -382,7 +382,7 @@ class viewProfile(LoginRequiredMixin,DetailView):
     fields="__all__"
     # success_url = reverse_lazy('userhome')
     template_name = "userdetail/profileview.html"
-class deleteProfile(DeleteView):
+class deleteProfile(LoginRequiredMixin,DeleteView):
     model = Profile
     success_message = "deleted..."
     success_url = '/uh'
@@ -394,3 +394,9 @@ class deleteProfile(DeleteView):
         self.kwargs['pk'] =sk.id
         print("at::",self.kwargs['pk'])
         return self.delete(request, *args, **kwargs)
+    
+  def userLogout(request):
+    del request.session['username']
+    del request.session['accno']
+    logout(request)
+    return redirect("login")
