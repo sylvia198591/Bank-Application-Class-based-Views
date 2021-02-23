@@ -24,6 +24,7 @@ from Kiosk.views import *
 
 urlpatterns = [
     path('Addaccount', views.createAccount.as_view(), name="Account_create"),
+    path('Addaccount1/<int:pk>', views.Account_ns.as_view(), name="Account_create1"),
     path('AddTrans', views.createTrans.as_view(), name="Trans_create"),
     path('Datewise', views.createDatewise.as_view(), name="Datewise_create"),
     path('Viewaccount', views.viewAccount.as_view(), name="Account_view"),
