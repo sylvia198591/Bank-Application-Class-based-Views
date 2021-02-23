@@ -36,6 +36,8 @@ urlpatterns = [
         name='login'
     ),
     path('userlogout', auth_views.LogoutView.as_view(
+            del request.session['username']
+            del request.session['accno']
             next_page='userhome'
             ),
             name='userlogout'
